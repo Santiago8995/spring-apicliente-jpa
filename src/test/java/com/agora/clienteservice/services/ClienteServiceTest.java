@@ -1,51 +1,32 @@
 package com.agora.clienteservice.services;
 
-import com.agora.clienteservice.controllers.ClienteController;
 import com.agora.clienteservice.dao.ClienteDAO;
 import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.models.KpiCliente;
 import com.agora.clienteservice.repositories.ClienteRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.BDDMockito.given;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 class ClienteServiceTest {
 
 
-    private MockMvc mockMvc;
-
-    ObjectMapper objectMapper = new ObjectMapper();
-    ObjectWriter objectWriter = objectMapper.writer();
-
     @Mock
     private ClienteRepository repositorio;
 
     @Mock
-    private ClienteDAO clienteDAO;
+    ClienteDAO clienteDAO;
 
     @InjectMocks
     private ClienteService clienteService;
@@ -53,11 +34,9 @@ class ClienteServiceTest {
     private Cliente cliente;
 
 
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(clienteService).build();
 
 
         long id = 200;
@@ -72,8 +51,8 @@ class ClienteServiceTest {
 
     @Test
     void obtenerClientes() {
-        Mockito.when(repositorio.findAll()).thenReturn(Arrays.asList(cliente));
-        assertNotNull(clienteService.obtenerClientes());
+        Mockito.when(repositorio.findAll()).thenReturn(Collections.singletonList(cliente));
+        assertNotNull(clienteService.listarClientes());
     }
 
     @Test
@@ -96,15 +75,9 @@ class ClienteServiceTest {
 
     @Test
     void kpiCliente() {
+       KpiCliente kpiCliente = KpiCliente.builder().promedioEdades(25.5).desviacionEstandar(4.5).build();
 
-        ArrayList<Integer> listaEdades = new ArrayList<Integer>(List.of(3, 1, 4));
-        KpiCliente kpiCliente = KpiCliente.builder().promedioEdades(25.5).desviacionEstandar(4.5).build();
-
-        Mockito.when(clienteDAO.getAllAge()).thenReturn(listaEdades);
-/*Mockito.when(clienteService.kpiCliente()).thenReturn(kpiCliente);*/
-
-
-
+        Mockito.when(clienteService.kpiCliente()).thenReturn(kpiCliente);
 
     }
 

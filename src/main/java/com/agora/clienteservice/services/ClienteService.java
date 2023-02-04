@@ -4,44 +4,39 @@ import com.agora.clienteservice.dao.ClienteDAO;
 import com.agora.clienteservice.errors.RequestException;
 import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.models.KpiCliente;
-import com.agora.clienteservice.repositories.ClienteRepository;
-import com.agora.clienteservice.utils.CalculosAuxiliares;
 import com.agora.clienteservice.utils.Validaciones;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
 import java.util.ArrayList;
-import java.util.List;
+
 @Service
 public class ClienteService {
 
     @Autowired
     ClienteDAO clienteDAO;
-    CalculosAuxiliares calculoAux;
-    Validaciones validacion;
 
-    public ArrayList<Cliente> obtenerClientes() {
-        return clienteDAO.findAll();
+    Integer promedioVida = 75;
+
+
+    public ArrayList<Cliente> listarClientes() {
+        ArrayList<Cliente> listaClientes = clienteDAO.findAll();
+        listaClientes.forEach(c->c.setVidaEstimada(promedioVida - c.getEdad()));
+        return listaClientes;
     }
 
 
     public Cliente crearCliente(Cliente cliente) {
-        if (!validacion.validarEdad(cliente.getFechaNacimiento(),cliente.getEdad())) {
+        if (!Validaciones.validarEdad(cliente.getFechaNacimiento(),cliente.getEdad())) {
             throw new RequestException("La edad ingresada no coincide con la fecha de nacimiento");
         }
+        cliente.setVidaEstimada(promedioVida - cliente.getEdad());
 
         return clienteDAO.save(cliente);
     }
 
     public KpiCliente kpiCliente() {
-        ArrayList<Integer> listaEdad = clienteDAO.getAllAge();
-
-        Double edadPromedio = calculoAux.getPromedio(listaEdad);
-        Double desvEstandarEdad = calculoAux.getDesvEstandar(listaEdad);
-
-        return new KpiCliente(edadPromedio,desvEstandarEdad);
+        return clienteDAO.getKpiCliente();
     }
 
 }

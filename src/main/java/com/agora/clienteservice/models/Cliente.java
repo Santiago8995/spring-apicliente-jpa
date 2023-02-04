@@ -3,19 +3,16 @@ package com.agora.clienteservice.models;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Builder
 @Entity
 @Table(name = "clientes")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {
@@ -48,6 +45,40 @@ public class Cliente {
     @DateTimeFormat(pattern = "dd-mm-yyyy")
     private LocalDate fechaNacimiento;
 
-//    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @ApiModelProperty(hidden = true)
+    private Integer vidaEstimada;
 
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Integer getEdad() {
+        return edad;
+    }
+
+    public void setEdad(Integer edad) {
+        this.edad = edad;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public void setVidaEstimada(Integer vidaEstimada) {
+        this.vidaEstimada = vidaEstimada;
+    }
 }
