@@ -38,5 +38,7 @@ public class SwaggerConfig {
                 "LICENSE URL",
                 Collections.emptyList()
         );
+
+
     }
 }

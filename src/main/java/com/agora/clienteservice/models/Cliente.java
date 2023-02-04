@@ -48,7 +48,21 @@ public class Cliente {
     @ApiModelProperty(hidden = true)
     private Integer vidaEstimada;
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public Integer getVidaEstimada() {
+        return vidaEstimada;
+    }
 
     public void setId(Long id) {
         this.id = id;
