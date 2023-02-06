@@ -3,8 +3,7 @@ package com.agora.clienteservice.utils;
 import com.sun.istack.NotNull;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.Period;
 import java.util.List;
 
 public class CalculosAuxiliares {
@@ -35,6 +34,13 @@ public class CalculosAuxiliares {
         }
 
         return Math.sqrt(desvEstandar / length);
+
+    }
+
+    public static Integer getEdadPorFecha(LocalDate fecha){
+        LocalDate fechaActual = LocalDate.now();
+        Period periodo = Period.between(fecha, fechaActual);
+        return periodo.getYears();
 
     }
 

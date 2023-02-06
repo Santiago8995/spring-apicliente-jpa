@@ -44,7 +44,6 @@ class ClienteServiceTest {
         cliente.setId(id);
         cliente.setNombre("Carlos");
         cliente.setApellido("Perepe");
-        cliente.setEdad(27);
         cliente.setFechaNacimiento(LocalDate.parse("1989-01-01"));
 
     }
@@ -62,7 +61,6 @@ class ClienteServiceTest {
         Cliente.ClienteBuilder builder = Cliente.builder();
         builder.nombre("Ramon");
         builder.apellido("Gimenez");
-        builder.edad(34);
         builder.fechaNacimiento(LocalDate.parse("1989-01-01"));
         Cliente cliente1 = builder.build();
 

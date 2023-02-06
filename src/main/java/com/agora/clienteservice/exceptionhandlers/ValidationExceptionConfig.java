@@ -1,10 +1,6 @@
 package com.agora.clienteservice.exceptionhandlers;
 
-import com.agora.clienteservice.errors.ErrorEdad;
-import com.agora.clienteservice.errors.RequestException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,17 +21,12 @@ public class ValidationExceptionConfig extends Exception {
 
         return mapError;
     }
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = RequestException.class)
-    public ResponseEntity<ErrorEdad> errorEdadException(RequestException e){
-        ErrorEdad error = ErrorEdad.builder().message(e.getMessage()).build();
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
+
    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = DateTimeParseException.class)
     public Map<String, String> validarFechaFormato(DateTimeParseException ex){
         Map<String,String> mapError = new HashMap<>();
-        mapError.put("FechaNacimiento:",ex.getParsedString() + " - no es una fecha valida.");
+        mapError.put("FechaNacimiento:",ex.getParsedString() + " no es una fecha valida. (Formato: DD-MM-YYYY)");
 
         return mapError;
     }

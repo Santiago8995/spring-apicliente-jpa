@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 public class ClienteDaoImpl implements ClienteDAO {
@@ -26,7 +25,10 @@ public class ClienteDaoImpl implements ClienteDAO {
     }
 
     public KpiCliente getKpiCliente(){
-        List<Integer> edadesList = ((ArrayList<Cliente>) clienteRepository.findAll()).stream().map(Cliente::getEdad).collect(Collectors.toList());
+        List<Integer> edadesList = new ArrayList<>();
+        for (Cliente cliente: clienteRepository.findAll()) {
+            edadesList.add(CalculosAuxiliares.getEdadPorFecha(cliente.getFechaNacimiento()));
+        }
         Double edadPromedio = CalculosAuxiliares.getPromedio(edadesList);
         Double desvEstandarEdad = CalculosAuxiliares.getDesvEstandar(edadesList);
 

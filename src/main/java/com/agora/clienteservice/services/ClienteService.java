@@ -1,10 +1,10 @@
 package com.agora.clienteservice.services;
 
 import com.agora.clienteservice.dao.ClienteDAO;
-import com.agora.clienteservice.errors.RequestException;
+import com.agora.clienteservice.dto.ClienteDTO;
 import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.models.KpiCliente;
-import com.agora.clienteservice.utils.Validaciones;
+import com.agora.clienteservice.utils.CalculosAuxiliares;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,18 +19,28 @@ public class ClienteService {
     Integer promedioVida = 75;
 
 
-    public ArrayList<Cliente> listarClientes() {
+    public ArrayList<ClienteDTO> listarClientes() {
+
         ArrayList<Cliente> listaClientes = clienteDAO.findAll();
-        listaClientes.forEach(c->c.setVidaEstimada(promedioVida - c.getEdad()));
-        return listaClientes;
+        ArrayList<ClienteDTO>lclientesDTO = new ArrayList<>();
+
+        for (Cliente cliente: listaClientes) {
+            ClienteDTO.ClienteDTOBuilder builder = ClienteDTO.builder()
+                    .id(cliente.getId())
+                    .nombre(cliente.getNombre())
+                    .apellido(cliente.getApellido())
+                    .fechaNacimiento(cliente.getFechaNacimiento())
+                    .edad(CalculosAuxiliares.getEdadPorFecha(cliente.getFechaNacimiento()));
+            ClienteDTO clienteDTO = builder.build();
+            clienteDTO.setVidaRestanteAprox(promedioVida - clienteDTO.getEdad());
+
+            lclientesDTO.add(clienteDTO);
+        }
+        return lclientesDTO;
     }
 
 
     public Cliente crearCliente(Cliente cliente) {
-        if (!Validaciones.validarEdad(cliente.getFechaNacimiento(),cliente.getEdad())) {
-            throw new RequestException("La edad ingresada no coincide con la fecha de nacimiento");
-        }
-        cliente.setVidaEstimada(promedioVida - cliente.getEdad());
 
         return clienteDAO.save(cliente);
     }

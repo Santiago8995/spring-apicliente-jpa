@@ -1,5 +1,6 @@
 package com.agora.clienteservice.controllers;
 
+import com.agora.clienteservice.dto.ClienteDTO;
 import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.services.ClienteService;
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +23,7 @@ public class ClienteController {
 
 @ApiOperation(value="Listar Clientes",notes= "Entrega una lista con los Clientes cargados en la Base de Datos.")
     @GetMapping("/listarclientes")
-    public ResponseEntity<List<Cliente>> listarClientes() {
+    public ResponseEntity<List<ClienteDTO>> listarClientes() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
