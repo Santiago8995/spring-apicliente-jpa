@@ -10,15 +10,16 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/api/v1/"
+host: "testapi-jpa.rj.r.appspot.com"
+basePath: "/api/v1/clientes"
 tags:
   - name: "Clientes"
     description: "Operaciones sobre Clientes"
 schemes:
+  - "http"
   - "https"
 paths:
-  /clientes/crearcliente:
+  /crearcliente:
     post:
       tags:
         - "cliente"
@@ -67,7 +68,7 @@ paths:
 
         "400":
           description: "BAD REQUEST - Error en el formato de alguno de los datos enviados."
-  /clientes/listarclientes:
+  /listarclientes:
     get:
       tags:
         - "cliente"
@@ -80,12 +81,12 @@ paths:
         "200":
           description: "successful operation"
           schema:
-            type: "array"
+            type: ""
             items:
               $ref: "#/definitions/Cliente"
         "404":
           description: "NOT FOUND"
-  /clientes/kpiclientes:
+  /kpicliente:
     get:
       tags:
         - "cliente"
