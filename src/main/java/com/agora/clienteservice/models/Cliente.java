@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Cliente {
 
-   final String regexNombre = "^[^-'](?=(?![A-Z]?[A-Z]))(?=(?![a-z]+[A-Z]))(?=(?!.*[A-Z][A-Z]))(?=(?!.*[-'][-'.]))(?=(?!.*[.][-'.]))[A-Za-z-'.]{2,}$";
+
 
     @ApiModelProperty(hidden = true)
     @Id
@@ -29,19 +29,19 @@ public class Cliente {
     @ApiModelProperty(position = 0)
     @NotBlank(message="Nombre no puede estar vacio")
     @Size(max=15, message = "Nombre max caracteres: 15")
-    @Pattern(regexp=regexNombre, message = "Formato del nombre, incorrecto (No admite espacios, caracteres numericos o especiales)")
+    @Pattern(regexp="^[^-'](?=(?![A-Z]?[A-Z]))(?=(?![a-z]+[A-Z]))(?=(?!.*[A-Z][A-Z]))(?=(?!.*[-'][-'.]))(?=(?!.*[.][-'.]))[A-Za-z-'.]{2,}$", message = "Formato del nombre, incorrecto (No admite espacios, caracteres numericos o especiales)")
     private String nombre;
+
 
     @ApiModelProperty(position = 1)
     @NotBlank(message="Apellido no puede estar vacio")
     @Size(max=15, message = "Nombre max caracteres: 15")
-    @Pattern(regexp=regexNombre, message = "Formato del apellido, incorrecto (No admite espacios, caracteres numericos o especiales)")
+    @Pattern(regexp="^[^-'](?=(?![A-Z]?[A-Z]))(?=(?![a-z]+[A-Z]))(?=(?!.*[A-Z][A-Z]))(?=(?!.*[-'][-'.]))(?=(?!.*[.][-'.]))[A-Za-z-'.]{2,}$", message = "Formato del apellido, incorrecto (No admite espacios, caracteres numericos o especiales)")
     private String apellido;
 
     @ApiModelProperty(position = 2)
-    @NotBlank(message="La fecha no puede estar vacia")
     @Past(message = "La fecha no puede ser posterior a la actual")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate fechaNacimiento;
 
 

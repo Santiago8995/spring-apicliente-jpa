@@ -38,8 +38,8 @@ public class ClienteController {
     @ApiOperation(value="Kpi Cliente",notes= "Entrega un promedio y desviacion estandar entre las edades de los clientes registrados.")
     @GetMapping("/kpicliente")
     public ResponseEntity kpiCliente() {
-//        return ResponseEntity.ok(clienteService.kpiCliente()).getBody();
-        return new ResponseEntity(clienteService.kpiCliente(), HttpStatus.FOUND);
+
+        return new ResponseEntity(clienteService.kpiCliente(), HttpStatus.OK);
     }
 
 

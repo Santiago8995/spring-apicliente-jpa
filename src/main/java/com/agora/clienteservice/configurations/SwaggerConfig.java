@@ -28,7 +28,7 @@ public class SwaggerConfig {
             InMemorySwaggerResourcesProvider defaultResourcesProvider) {
         return () -> {
             List<SwaggerResource> resources = new ArrayList<>();
-            Arrays.asList("testv2-api","testv3-api")
+            Arrays.asList("test-api","testv3-api")
                     .forEach(resourceName -> resources.add(loadResource(resourceName)));
             return resources;
         };
