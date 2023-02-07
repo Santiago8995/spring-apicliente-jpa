@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Component
 public class ClienteDTO implements Serializable {
 
     private Long id;
@@ -19,8 +21,10 @@ public class ClienteDTO implements Serializable {
     private String apellido;
     private LocalDate fechaNacimiento;
     private Integer edad;
-    private Integer vidaRestanteAprox;
+    private Integer vidaEstimada;
 
 
-
+    public void setVidaRestanteAprox(int i) {
+       this.vidaEstimada = i;
+    }
 }

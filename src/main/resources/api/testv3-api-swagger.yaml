@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: Swagger:Cliente Service Api 1.0
+  description: |-
+    Api Rest - SpringBoot JPA.
+
+    Some useful links:
+    - [GitHub Repository](https://github.com/Santiago8995/spring-apicliente-jpa)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Cliente Service API Description
+  url: https://testapi-jpa.rj.r.appspot.com/api/v1/clientes/listarclientes
+servers:
+  - url: https://testapi-jpa.rj.r.appspot.com/api/v1/
+tags:
+  - name: Cliente
+    description: Administracion Clientes
+paths:
+  /clientes/crearcliente:
+    post:
+      tags:
+        - cliente
+      summary: Crea un nuevo cliente.
+      description: Crea un nuevo cliente en la base de datos.
+      operationId: crearCliente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: fernando
+                apellido:
+                  type: string
+                  example: gonzalez
+                fechanacimiento:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nombre:
+                    type: string
+                    example: fernando
+                  apellido:
+                    type: string
+                    example: gonzalez
+                  fechanacimiento:
+                    type: string
+                    format: date
+        '400':
+          description: >-
+            BAD REQUEST - xxx/xx/xx no es una fecha valida Formato.(DD-MM-YYYY)
+            / La fecha no puede ser posterior a la actual / La fecha no puede
+            estar vacia / Nombre no puede estar vacio / Nombre max caracteres:15
+            / Formato del nombre, incorrecto(No admite espacios, caracteres
+            numericos o especiales) / Apellido no puede estar vacio / Apellido
+            max caracteres:15 / Formato del apellido, incorrecto (No admite
+            espacios, caracteres numericos o especiales) /
+        '404':
+          description: NOT FOUND
+  /clientes/listarclientes:
+    get:
+      tags:
+        - cliente
+      summary: Lista todos los clientes.
+      description: >-
+        Lista todos los clientes registrados. Su edad, y los años restantes
+        aproximados que le quedan de vida (Segun el promedio global de años que
+        vive una persona).
+      operationId: listarClientes
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Invalid status value
+  /clientes/kpiclientes:
+    get:
+      tags:
+        - cliente
+      summary: Devuelve el kpi entre la edad de los clientes.
+      description: >-
+        Devuelve el promedio y la desviacion estandar entre las edades de todos
+        los clientes.
+      operationId: findPetsByTags
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/KpiCliente'
+        '400':
+          description: Invalid tag value
+components:
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        nombre:
+          type: string
+          example: fernando
+        apellido:
+          type: string
+          example: gonzalez
+        fechanacimiento:
+          type: string
+          format: date-time
+        edad:
+          type: integer
+          format: int64
+          example: 27
+        vidaEstimada:
+          type: integer
+          format: int64
+          example: 45
+
+    KpiCliente:
+      type: object
+      properties:
+        promedioedades:
+          type: number
+          example: 25.45
+        desviacionestandar:
+          type: number
+          example: 4.5645466746
+  requestBodies:
+    Cliente:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Cliente'
+    ClienteArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Cliente'

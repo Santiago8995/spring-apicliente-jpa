@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.aspectj.bridge.Message;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -28,19 +29,22 @@ public class Cliente {
     @ApiModelProperty(position = 0)
     @NotBlank(message="Nombre no puede estar vacio")
     @Size(max=15, message = "Nombre max caracteres: 15")
-    @Pattern(regexp=regexNombre, message = "Formato del nombre, incorrecto")
+    @Pattern(regexp=regexNombre, message = "Formato del nombre, incorrecto (No admite espacios, caracteres numericos o especiales)")
     private String nombre;
 
     @ApiModelProperty(position = 1)
     @NotBlank(message="Apellido no puede estar vacio")
     @Size(max=15, message = "Nombre max caracteres: 15")
-    @Pattern(regexp=regexNombre, message = "Formato del apellido, incorrecto")
+    @Pattern(regexp=regexNombre, message = "Formato del apellido, incorrecto (No admite espacios, caracteres numericos o especiales)")
     private String apellido;
 
     @ApiModelProperty(position = 2)
+    @NotBlank(message="La fecha no puede estar vacia")
     @Past(message = "La fecha no puede ser posterior a la actual")
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate fechaNacimiento;
+
+
 
 
     public Long getId() {
