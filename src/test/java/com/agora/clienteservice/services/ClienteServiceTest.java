@@ -1,5 +1,6 @@
 package com.agora.clienteservice.services;
 
+import com.agora.clienteservice.converter.ClienteConverter;
 import com.agora.clienteservice.dto.ClienteDTO;
 import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.repositories.ClienteRepository;
@@ -23,30 +24,18 @@ class ClienteServiceTest {
 
     @Mock
     private ClienteRepository repositorio;
-
     @InjectMocks
     private ClienteService clienteService;
 
-
-    private Cliente cliente;
-
+    @InjectMocks
     private ClienteDTO clienteDTO;
+    @Mock
+    ClienteConverter clienteConverter;
 
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        long id = 1;
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
-        cliente.setApellido("Diaz");
-        cliente.setNombre("Ramon");
-        cliente.setFechaNacimiento(LocalDate.parse("1989-01-01"));
-
-
-
-
     }
 
     @Test
@@ -63,24 +52,18 @@ class ClienteServiceTest {
     }
 
     @Test
-    void crearCliente() throws Exception {
+    void crearCliente(){
 
         long id = 1;
         Cliente clientedb = new Cliente(id,"Ramon","Diaz",LocalDate.parse("1985-02-01"));
-        ClienteDTO clientedto = new ClienteDTO("Ramon","Diaz",LocalDate.parse("1985-02-01"));
+        ClienteDTO clientedto = new ClienteDTO(null,"Ramon","Diaz",LocalDate.parse("1985-02-01"),null,null);
 
 
-
+        Mockito.when(clienteConverter.convertDtoToEntity(clienteDTO)).thenReturn(clientedb);
         Mockito.when(repositorio.save(clientedb)).thenReturn(clientedb);
+
         clienteService.crearCliente(clientedto);
         System.out.println(clienteService.crearCliente(clientedto));
-
-
-
-
-
-
-
     }
 
     @Test

@@ -10,18 +10,18 @@ Cliente Api
 -Controllers:
     ClienteController: expone las funciones de la api hacia afuera.
                        Seteo de las url/path de cada metodo.
+-Converter:
+    ClienteConverter: Conversion de Entidad a DTO y viceversa.
 
--DAO
-     Metodos Data Acces Object entre la api y el repositorio de la DB.
-     ClienteDAO: Interface que expone los metodos del DAO.
-     ClienteDaoImpl: Contiene la implementacion de los metodos DAO.
+-CustomExceptions
+    RequestExceptions: Excepcion custom para request.
 
 -DTO
      ClienteDTO: Unifica los datos que recibe y expone la api para la entidad Cliente.
      Contiene validaciones y formatos de los campos.
 
 -ExceptionHandlers
-    ValidationExceptionConfig: Configuracion y manejo de excepciones referidas a las validaciones de los campos (Contiene armado de los mensajes de respuesta).
+    ValidationExceptionConfig: Configuracion y manejo de excepciones referidas a las validaciones de los campos (Contiene los mensajes de respuesta).
 
 -Models
     Entidades: Cliente (Define la tabla Cliente en la DB).
