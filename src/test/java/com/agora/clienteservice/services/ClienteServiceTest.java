@@ -1,8 +1,7 @@
 package com.agora.clienteservice.services;
 
-import com.agora.clienteservice.dao.ClienteDAO;
+import com.agora.clienteservice.dto.ClienteDTO;
 import com.agora.clienteservice.models.Cliente;
-import com.agora.clienteservice.models.KpiCliente;
 import com.agora.clienteservice.repositories.ClienteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,47 +24,60 @@ class ClienteServiceTest {
     @Mock
     private ClienteRepository repositorio;
 
-    @Mock
-    ClienteDAO clienteDAO;
-
     @InjectMocks
     private ClienteService clienteService;
 
+
     private Cliente cliente;
+
+    private ClienteDTO clienteDTO;
 
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-
-        long id = 200;
-        cliente = new Cliente();
+        long id = 1;
+        Cliente cliente = new Cliente();
         cliente.setId(id);
-        cliente.setNombre("Carlos");
-        cliente.setApellido("Perepe");
+        cliente.setApellido("Diaz");
+        cliente.setNombre("Ramon");
         cliente.setFechaNacimiento(LocalDate.parse("1989-01-01"));
+
+
+
 
     }
 
     @Test
     void obtenerClientes() {
-        Mockito.when(repositorio.findAll()).thenReturn(Collections.singletonList(cliente));
+        long id = 1;
+        Cliente clientedb = new Cliente(id,"Ramon","Diaz",LocalDate.parse("1989-01-01"));
+
+        Mockito.when(repositorio.findAll()).thenReturn(Collections.singletonList(clientedb));
         assertNotNull(clienteService.listarClientes());
+
+        System.out.println(clienteService.listarClientes());
+
+
     }
 
     @Test
     void crearCliente() throws Exception {
 
+        long id = 1;
+        Cliente clientedb = new Cliente(id,"Ramon","Diaz",LocalDate.parse("1985-02-01"));
+        ClienteDTO clientedto = new ClienteDTO("Ramon","Diaz",LocalDate.parse("1985-02-01"));
 
-        Cliente.ClienteBuilder builder = Cliente.builder();
-        builder.nombre("Ramon");
-        builder.apellido("Gimenez");
-        builder.fechaNacimiento(LocalDate.parse("1989-01-01"));
-        Cliente cliente1 = builder.build();
 
-        Mockito.when(clienteService.crearCliente(cliente1)).thenReturn(cliente1);
-        assertNotNull(clienteService.crearCliente(cliente1));
+
+        Mockito.when(repositorio.save(clientedb)).thenReturn(clientedb);
+        clienteService.crearCliente(clientedto);
+        System.out.println(clienteService.crearCliente(clientedto));
+
+
+
+
 
 
 
@@ -73,10 +85,12 @@ class ClienteServiceTest {
 
     @Test
     void kpiCliente() {
-       KpiCliente kpiCliente = KpiCliente.builder().promedioEdades(25.5).desviacionEstandar(4.5).build();
+        long id = 1;
+        Cliente clientedb = new Cliente(id,"Ramon","Diaz",LocalDate.parse("1989-01-01"));
 
-        Mockito.when(clienteService.kpiCliente()).thenReturn(kpiCliente);
-
+        Mockito.when(repositorio.findAll()).thenReturn(Collections.singletonList(clientedb));
+        assertNotNull(clienteService.kpiCliente());
+        System.out.println(clienteService.kpiCliente());
     }
 
 }

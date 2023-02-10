@@ -26,8 +26,19 @@ public class ValidationExceptionConfig extends Exception {
     @ExceptionHandler(value = DateTimeParseException.class)
     public Map<String, String> validarFechaFormato(DateTimeParseException ex){
         Map<String,String> mapError = new HashMap<>();
-        mapError.put("FechaNacimiento:",ex.getParsedString() + " no es una fecha valida. (Formato: DD-MM-YYYY)");
+        mapError.put("FechaNacimiento:",ex.getParsedString() + " no es una fecha valida. (Formato: dd-MM-yyyy)");
 
         return mapError;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = com.agora.clienteservice.customexceptions.RequestException.class)
+    public Map<String, String> validarMadurez(com.agora.clienteservice.customexceptions.RequestException ex){
+        Map<String,String> mapError = new HashMap<>();
+        mapError.put("FechaNacimiento", "El cliente no puede ser menor de 18.");
+
+        return mapError;
+    }
+
+
 }

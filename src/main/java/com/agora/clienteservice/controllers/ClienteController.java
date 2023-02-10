@@ -1,9 +1,8 @@
 package com.agora.clienteservice.controllers;
 
+import com.agora.clienteservice.converter.ClienteConverter;
 import com.agora.clienteservice.dto.ClienteDTO;
-import com.agora.clienteservice.models.Cliente;
 import com.agora.clienteservice.services.ClienteService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +18,22 @@ public class ClienteController {
 
     @Autowired
     ClienteService clienteService;
+    @Autowired
+    private ClienteConverter clienteConverter;
 
 
-@ApiOperation(value="Listar Clientes",notes= "Entrega una lista con los Clientes cargados en la Base de Datos.")
     @GetMapping("/listarclientes")
     public ResponseEntity<List<ClienteDTO>> listarClientes() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
 
 
-    @ApiOperation(value="Crear Cliente",notes= "Crea un Cliente y lo carga en la Base de Datos.")
     @PostMapping("/crearcliente")
-    public ResponseEntity<Cliente> crearCliente(@RequestBody @Valid Cliente cliente) {
-        return new ResponseEntity<Cliente>(clienteService.crearCliente(cliente), HttpStatus.CREATED);
+    public ResponseEntity<ClienteDTO> crearCliente(@RequestBody @Valid ClienteDTO cliente) {
+        return new ResponseEntity<ClienteDTO>(clienteService.crearCliente(cliente), HttpStatus.CREATED);
     }
 
 
-    @ApiOperation(value="Kpi Cliente",notes= "Entrega un promedio y desviacion estandar entre las edades de los clientes registrados.")
     @GetMapping("/kpicliente")
     public ResponseEntity kpiCliente() {
 
