@@ -4,8 +4,8 @@ Cliente Api
 - com.agora.clienteservice
 
 -Configurations:
-    Configuracion recurso Swagger: SwaggerConfig.
-    WebMvcCustomConfiguration: exposicion del recurso Swagger configurado.
+    SwaggerConfig : Configuracion recurso Swagger.
+    WebMvcCustomConfiguration: exposicion y manejo del recurso web para el swagger.
 
 -Controllers:
     ClienteController: expone las funciones de la api hacia afuera.
@@ -44,3 +44,5 @@ Cliente Api
     Propiedades de la conexion a la Base de Datos(User/Password, url, driver).
 
 
+Swagger:
+http://testapi-jpa.rj.r.appspot.com/swagger-ui.html
