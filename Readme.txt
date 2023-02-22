@@ -43,6 +43,11 @@ Cliente Api
 -Application.Properties
     Propiedades de la conexion a la Base de Datos(User/Password, url, driver).
 
+Test
+-Java: Test unitarios
+
+-Postman: Collection con pruebas automatizadas para postman. (Importar collection file en postman)
+
 
 Swagger:
 http://testapi-jpa.rj.r.appspot.com/swagger-ui.html
